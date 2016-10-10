@@ -37,6 +37,7 @@ public class UI extends javax.swing.JFrame {
         btnRight = new javax.swing.JButton();
         btnStop = new javax.swing.JButton();
         btnBackward = new javax.swing.JButton();
+        btnDistance = new javax.swing.JButton();
         btnLed = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
 
@@ -95,6 +96,13 @@ public class UI extends javax.swing.JFrame {
             }
         });
 
+        btnDistance.setText("Distance");
+        btnDistance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDistanceActionPerformed(evt);
+            }
+        });
+
         btnLed.setText("LED");
         btnLed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,15 +122,15 @@ public class UI extends javax.swing.JFrame {
                     .addComponent(btnStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnForward, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBackward, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLed, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(111, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDistance)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLed, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,9 +143,13 @@ public class UI extends javax.swing.JFrame {
                     .addComponent(btnLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBackward, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLed, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                .addGap(4, 4, 4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -176,7 +188,7 @@ public class UI extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
@@ -207,9 +219,9 @@ public class UI extends javax.swing.JFrame {
         server.sendMessage("b");
     }//GEN-LAST:event_btnBackwardActionPerformed
 
-    private void btnLedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLedActionPerformed
-        server.sendMessage("A");
-    }//GEN-LAST:event_btnLedActionPerformed
+    private void btnDistanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDistanceActionPerformed
+        server.sendMessage("x");
+    }//GEN-LAST:event_btnDistanceActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
 
@@ -228,6 +240,10 @@ public class UI extends javax.swing.JFrame {
             server.sendMessage("s");
         }
     }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void btnLedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLedActionPerformed
+        server.sendMessage("A");
+    }//GEN-LAST:event_btnLedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,6 +283,7 @@ public class UI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBackward;
     private javax.swing.JButton btnConnect;
+    private javax.swing.JButton btnDistance;
     private javax.swing.JButton btnForward;
     private javax.swing.JButton btnLed;
     private javax.swing.JButton btnLeft;

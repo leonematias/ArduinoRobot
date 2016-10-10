@@ -187,7 +187,7 @@ public class BluetoothDeviceManager {
         public void run() {
             try {
                 byte buffer[] = new byte[1024];
-                while (!listenMessagesFlag) {
+                while (listenMessagesFlag) {
                     int n = deviceIn.read(buffer);
                     String message = new String(buffer, 0, n);
                     
