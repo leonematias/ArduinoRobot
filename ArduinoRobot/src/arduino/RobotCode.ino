@@ -84,24 +84,33 @@ int distanceTest() {
   return (int)fDistance;
 } 
 
-void rotateServo(int degrees) {
-    servoPos = servoPos - degrees;
-    if(servoPos < 0) {
-        servoPos = 0;
-    } else if(servoPos > 180) {
-        servoPos = 180;
+void setServoInPosition(int pos) {
+    if(pos < 0) {
+        pos = 0;
+    } else if(pos > 180) {
+        pos = 180;
     }
-
-    myServo.write(servoPos);
-    delay(1000);
+    int diff = abs(servoPos - pos);
+    if(diff > 0) {
+        myServo.write(servoPos);
+        delay(15 * diff);
+    }
 }
 
-void rotateServoLeft() {
-    rotateServo(0);
+void rotateServo(int degrees) {
+    setServoInPosition(servoPos + degrees);
 }
 
-void rotateServoLeft() {
-    rotateServo(0);
+void pointServoToLeft() {
+    setServoInPosition(0);
+}
+
+void pointServoToRight() {
+    setServoInPosition(180);
+}
+
+void pointServoToFront() {
+    setServoInPosition(90);
 }
 
 //##############################################################################
@@ -158,6 +167,19 @@ void loop() {
         changeLedState();
     } else if(msg == 'x') {
         Serial.println("Hello World");
+    } else if(msg == 'y') {
+        pointServoToLeft();
+    } else if(msg == 'u') {
+        pointServoToRight();
+    } else if(msg == 'i') {
+        pointServoToFront();
+    } else if(msg == 'o') {
+        rotateServo(-5);
+    } else if(msg == 'p') {
+        rotateServo(5);
+    } else if(msg == 'h') {
+        int dist = distanceTest();
+        Serial.println(dist);
     }
 
 }
