@@ -20,13 +20,13 @@ int in1=9;
 int in2=8;
 int in3=7;
 int in4=6;
-int ENA=10;
+int ENA=11;
 int ENB=5;
-int ABS=135;
+int ABS=130;
 
 void moveForward() { 
-    digitalWrite(ENA,HIGH);
-    digitalWrite(ENB,HIGH);
+    analogWrite(ENA,ABS);
+    analogWrite(ENB,ABS);
     digitalWrite(in1,LOW);
     digitalWrite(in2,HIGH);
     digitalWrite(in3,LOW);
@@ -34,8 +34,8 @@ void moveForward() {
 }
 
 void moveBackward() {
-    digitalWrite(ENA,HIGH);
-    digitalWrite(ENB,HIGH);
+    analogWrite(ENA,ABS);
+    analogWrite(ENB,ABS);
     digitalWrite(in1,HIGH);
     digitalWrite(in2,LOW);
     digitalWrite(in3,HIGH);
