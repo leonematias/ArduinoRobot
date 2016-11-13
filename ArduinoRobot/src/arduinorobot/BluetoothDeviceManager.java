@@ -187,12 +187,29 @@ public class BluetoothDeviceManager {
         public void run() {
             try {
                 byte buffer[] = new byte[1024];
+                StringBuilder sb = new StringBuilder(100);
+                
                 while (listenMessagesFlag) {
-                    int n = deviceIn.read(buffer);
-                    String message = new String(buffer, 0, n);
                     
-                    //Notify listener
-                    msgListener.messageReceived(message);
+                    //Read all characters
+                    int n = deviceIn.read(buffer);
+                    if(n > 0) {
+                        String str = new String(buffer, 0, n);
+                        for (int i = 0; i < str.length(); i++) {
+                            char c = str.charAt(i);
+                            
+                            //End of line?
+                            if(c == '\n') {
+                                //Notify listener
+                                String message = sb.toString().trim();
+                                sb.setLength(0);
+                                msgListener.messageReceived(message);
+                            } else {
+                                //Accumulate characters
+                                sb.append(c);
+                            }
+                        }
+                    }
                 }
             } catch (Exception e) {
                 throw new RuntimeException("Error receiving message", e);

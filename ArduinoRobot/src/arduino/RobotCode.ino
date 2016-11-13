@@ -12,17 +12,17 @@ int Trig = A5;
 int servoPos = 0;
 
 //LED
-int LED=13;
+int LED = 13;
 volatile int ledState = LOW;
 
 //Wheels motors
-int in1=9;
-int in2=8;
-int in3=7;
-int in4=6;
-int ENA=11;
-int ENB=5;
-int ABS=130;
+int in1 = 9;
+int in2 = 8;
+int in3 = 7;
+int in4 = 6;
+int ENA = 11;
+int ENB = 5;
+int ABS = 130;
 
 void moveForward() { 
     analogWrite(ENA,ABS);
@@ -90,8 +90,10 @@ void setServoInPosition(int pos) {
     } else if(pos > 180) {
         pos = 180;
     }
+
     int diff = abs(servoPos - pos);
     if(diff > 0) {
+        servoPos = pos;
         myServo.write(servoPos);
         delay(15 * diff);
     }

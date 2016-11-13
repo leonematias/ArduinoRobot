@@ -324,11 +324,11 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnServoLeftActionPerformed
 
     private void btnServoRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServoRightActionPerformed
-        server.sendMessage("p");
+        server.sendMessage("u");
     }//GEN-LAST:event_btnServoRightActionPerformed
 
     private void btnRotateRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRotateRightActionPerformed
-        server.sendMessage("i");
+        server.sendMessage("p");
     }//GEN-LAST:event_btnRotateRightActionPerformed
 
     private void btonRotateLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btonRotateLeftActionPerformed
