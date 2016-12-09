@@ -102,6 +102,17 @@ public class BluetoothDeviceManager {
         }
     }
     
+    /**
+     * Send single character message
+     */
+    public void sendMessage(char c) {
+        try {
+            this.deviceOut.write(c);
+        } catch (Exception e) {
+            throw new RuntimeException("Error sending message: " + c);
+        }
+    }
+    
     public void disconnect() {
         try {
             this.listenMessagesFlag = false;
