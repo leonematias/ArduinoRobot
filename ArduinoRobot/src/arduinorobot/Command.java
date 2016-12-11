@@ -14,7 +14,7 @@ public enum Command {
     TEST_DISTANCE('f'),
     DISTANCE_SENSOR_LEFT('g'),
     DISTANCE_SENSOR_RIGHT('h'),
-    DISTANCE_SENSOR_FORWARD('i'),
+    DISTANCE_SENSOR_CENTER('i'),
     LED_ON('j'),
     LED_OFF('k'),
     TEST_3_DISTANCES('l'),
@@ -23,6 +23,10 @@ public enum Command {
     TWO_STEPS_BACKWARD('o'),
     THREE_STEPS_BACKWARD('p'),
     ROTATE_LEFT_180('q'),
+    SET_SLOW_SPEED('r'),
+    SET_MID_SPEED('s'),
+    SET_FAST_SPEED('t'),
+    STOP('u'),
     ;
     
     private final static String OK_RESPONSE = "OK";
@@ -96,6 +100,11 @@ public enum Command {
     
     public static void led(Server server, boolean on) {
         sendAndWaitOk(server, on ? LED_ON : LED_OFF);
+    }
+
+    @Override
+    public String toString() {
+        return name() + "(" + code + ")";
     }
     
     

@@ -20,9 +20,9 @@ public class DistanceResponse {
         if(split.length != 3)
             throw new RuntimeException("Invalid distance response: " + response);
         
-        this.left = Integer.parseInt(split[0]);
-        this.center = Integer.parseInt(split[1]);
-        this.right = Integer.parseInt(split[2]);
+        this.center = Integer.parseInt(split[0]);
+        this.right = Integer.parseInt(split[1]);
+        this.left = Integer.parseInt(split[2]);
     }
     
 }

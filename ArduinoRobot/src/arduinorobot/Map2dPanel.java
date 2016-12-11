@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
@@ -15,13 +16,15 @@ import javax.swing.JPanel;
  */
 public class Map2dPanel {
     
-    private Canvas renderPanel;
+    private MyCanvas renderPanel;
     private BufferedImage renderImg;
     private Graphics2D renderG;
     private Dimension graphDim;
+    private boolean ready;
     
     public Map2dPanel() {
-        this.renderPanel = new Canvas();
+        this.ready = false;
+        this.renderPanel = new MyCanvas();
     }
     
     public Component getComponent() {
@@ -32,10 +35,14 @@ public class Map2dPanel {
         graphDim = renderPanel.getSize();
         renderImg = (BufferedImage)renderPanel.createImage(graphDim.width, graphDim.height);
         renderG = renderImg.createGraphics();
+        this.ready = true;
     }
 
     
     public void render() {
+        if(!ready)
+            return;
+        
         //Clean
         renderG.setColor(Color.BLACK);
         renderG.fillRect(0, 0, graphDim.width, graphDim.height);
@@ -50,5 +57,14 @@ public class Map2dPanel {
         renderG.setColor(Color.RED);
         renderG.fillRect(200, 200, 50, 50);
     }
+    
+    private class MyCanvas extends Canvas {
+        @Override
+        public void paint(Graphics g) {
+            render();
+        }
+    }
+
+    
     
 }

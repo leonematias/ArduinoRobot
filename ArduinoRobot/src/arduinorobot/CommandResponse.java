@@ -42,7 +42,7 @@ public class CommandResponse {
 
     @Override
     public String toString() {
-        return "CommandResponse{" + "command=" + command + ", response=" + response + '}';
+        return command + " -> " + response;
     }
     
     

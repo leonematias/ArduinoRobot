@@ -49,7 +49,7 @@ public class Server implements BluetoothDeviceManager.MsgListener {
             return commandResponse;
             
         } catch (Exception e) {
-            throw new RuntimeException("Error sending command: " + command.name());
+            throw new RuntimeException("Error sending command: " + command.name(), e);
         }
         
     }
