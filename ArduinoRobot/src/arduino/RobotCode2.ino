@@ -43,7 +43,7 @@ const int in1 = 9;
 const int in2 = 8;
 const int in3 = 7;
 const int in4 = 6;
-const int ENA = 10;
+const int ENA = 11;
 const int ENB = 5;
 const int SLOW_ABS = 80;
 const int MID_ABS = 130;
@@ -57,10 +57,10 @@ const int ROTATE_180_TIME = ROTATE_90_TIME * 2;
 //------------------------ Movement ------------------------//
 
 void moveForward() { 
-    //analogWrite(ENA,currentSpeed);
-    //analogWrite(ENB,currentSpeed);
-    digitalWrite(ENA,HIGH);
-    digitalWrite(ENB,HIGH);
+    analogWrite(ENA,currentSpeed);
+    analogWrite(ENB,currentSpeed);
+    //digitalWrite(ENA,HIGH);
+    //digitalWrite(ENB,HIGH);
     digitalWrite(in1,LOW);
     digitalWrite(in2,HIGH);
     digitalWrite(in3,LOW);
@@ -68,10 +68,10 @@ void moveForward() {
 }
 
 void moveBackward() {
-    //analogWrite(ENA,currentSpeed);
-    //analogWrite(ENB,currentSpeed);
-    digitalWrite(ENA,HIGH);
-    digitalWrite(ENB,HIGH);
+    analogWrite(ENA,currentSpeed);
+    analogWrite(ENB,currentSpeed);
+    //digitalWrite(ENA,HIGH);
+    //digitalWrite(ENB,HIGH);
     digitalWrite(in1,HIGH);
     digitalWrite(in2,LOW);
     digitalWrite(in3,HIGH);
@@ -79,10 +79,10 @@ void moveBackward() {
 }
 
 void rotateLeft() {
-    //analogWrite(ENA,currentSpeed);
-    //analogWrite(ENB,currentSpeed);
-    digitalWrite(ENA,HIGH);
-    digitalWrite(ENB,HIGH);
+    analogWrite(ENA,currentSpeed);
+    analogWrite(ENB,currentSpeed);
+    //digitalWrite(ENA,HIGH);
+    //digitalWrite(ENB,HIGH);
     digitalWrite(in1,LOW);
     digitalWrite(in2,HIGH);
     digitalWrite(in3,HIGH);
@@ -90,10 +90,10 @@ void rotateLeft() {
 }
 
 void rotateRight() {
-    //analogWrite(ENA,currentSpeed);
-    //analogWrite(ENB,currentSpeed);
-    digitalWrite(ENA,HIGH);
-    digitalWrite(ENB,HIGH);
+    analogWrite(ENA,currentSpeed);
+    analogWrite(ENB,currentSpeed);
+    //digitalWrite(ENA,HIGH);
+    //digitalWrite(ENB,HIGH);
     digitalWrite(in1,HIGH);
     digitalWrite(in2,LOW);
     digitalWrite(in3,LOW);

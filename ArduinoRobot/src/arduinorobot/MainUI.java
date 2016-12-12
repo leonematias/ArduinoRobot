@@ -77,6 +77,7 @@ public class MainUI {
         inputCommand = new JComboBox<>(Command.values());
         inputCommand.setMaximumSize(new Dimension(250, 25));
         inputCommand.setAlignmentX(Component.LEFT_ALIGNMENT);
+        inputCommand.setEnabled(false);
         controlsPanel.add(inputCommand);
         sendCommandButton = new JButton("Send command");
         sendCommandButton.addActionListener(new ActionListener() {
@@ -120,6 +121,7 @@ public class MainUI {
         log("CONNECTED");
         connectButton.setEnabled(false);
         sendCommandButton.setEnabled(true);
+        inputCommand.setEnabled(true);
         
         ai = new AI(server, map);
         //ai.execute();
