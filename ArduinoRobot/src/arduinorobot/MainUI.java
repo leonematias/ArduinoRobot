@@ -39,66 +39,35 @@ public class MainUI {
     private JButton connectButton;
     
     private Map2dPanel map;
-    private Server server;
-    private AI ai;
+    private UIControlPanel controlsPanel;
     
     public static void main(String[] args) {
         new MainUI();
     }
     
     public MainUI() {
-        frame = new JFrame("Gravity");
+        frame = new JFrame("Arduino Robot");
         frame.setMinimumSize(new Dimension(WIN_WIDTH, WIN_HEIGHT));
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         
+        //2D map
         map = new Map2dPanel();
         frame.add(map.getComponent(), BorderLayout.CENTER);
- 
         
         //Controls
-        JPanel controlsPanel = new JPanel();
-        BoxLayout boxLayout = new BoxLayout(controlsPanel, BoxLayout.PAGE_AXIS);
-        controlsPanel.setLayout(boxLayout);
-        //controlsPanel.setMaximumSize(new Dimension(-1, 50));
-        
-        connectButton = new JButton("Connect");
-        connectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                connect();
-            }
-        });
-        connectButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        controlsPanel.add(connectButton);
-        
-        
-        inputCommand = new JComboBox<>(Command.values());
-        inputCommand.setMaximumSize(new Dimension(250, 25));
-        inputCommand.setAlignmentX(Component.LEFT_ALIGNMENT);
-        inputCommand.setEnabled(false);
-        controlsPanel.add(inputCommand);
-        sendCommandButton = new JButton("Send command");
-        sendCommandButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendCommand((Command)inputCommand.getSelectedItem());
-            }
-        });
-        sendCommandButton.setEnabled(false);
-        sendCommandButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        controlsPanel.add(sendCommandButton);
-        
-        controlsPanel.add(Box.createVerticalGlue());
+        controlsPanel = new UIControlPanel(this);
         frame.add(controlsPanel, BorderLayout.WEST);
         
+        //Log area
         logArea = new JTextArea(5, 100);
         logArea.setEditable(false);
         frame.add(new JScrollPane(logArea), BorderLayout.SOUTH);
         
-        frame.pack();
         
+        //Make visible
+        frame.pack();
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         //frame.setLocation(screenDim.width / 2 - WIN_WIDTH / 2, screenDim.height / 2 - WIN_HEIGHT / 2);
         frame.setLocation(0, 0);
@@ -110,33 +79,26 @@ public class MainUI {
         frame.setVisible(true);
         
         
-        
         //Init map graphics
         map.init();
         map.render();
     }
     
-    private void connect() {
-        server = new Server();
-        log("CONNECTED");
-        connectButton.setEnabled(false);
-        sendCommandButton.setEnabled(true);
-        inputCommand.setEnabled(true);
-        
-        ai = new AI(server, map);
-        //ai.execute();
+    public void refresh() {
+        map.render();
+        controlsPanel.repaint();
     }
     
-    private void sendCommand(Command command) {
-        log("Sending command: " + command);
-        CommandResponse response = server.sendBlockingCommand(command);
-        log("Response: " + response);
-    }
-    
-    private void log(String msg) {
+    public void log(String msg) {
         logArea.append(msg);
         logArea.append("\n");
         logArea.setCaretPosition(logArea.getDocument().getLength());
     }
+
+    public Map2dPanel getMap() {
+        return map;
+    }
+    
+    
     
 }

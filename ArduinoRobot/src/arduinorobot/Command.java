@@ -27,6 +27,8 @@ public enum Command {
     SET_MID_SPEED('s'),
     SET_FAST_SPEED('t'),
     STOP('u'),
+    ROTATE_LEFT_SMALL('v'),
+    ROTATE_RIGHT_SMALL('w'),
     ;
     
     private final static String OK_RESPONSE = "OK";
@@ -79,8 +81,16 @@ public enum Command {
         sendAndWaitOk(server, ROTATE_LEFT_90);
     }
     
+    public static void leftSmall(Server server) {
+        sendAndWaitOk(server, ROTATE_LEFT_SMALL);
+    }
+    
     public static void right(Server server) {
         sendAndWaitOk(server, ROTATE_RIGHT_90);
+    }
+    
+    public static void rightSmall(Server server) {
+        sendAndWaitOk(server, ROTATE_RIGHT_SMALL);
     }
     
     public static void rotate180(Server server) {

@@ -27,6 +27,8 @@ const char SET_SLOW_SPEED = 'r';
 const char SET_MID_SPEED = 's';
 const char SET_FAST_SPEED = 't';
 const char STOP = 'u';
+const char ROTATE_LEFT_SMALL = 'v';
+const char ROTATE_RIGHT_SMALL = 'w';
 
 
 //Servo library
@@ -50,6 +52,7 @@ const int MID_ABS = 130;
 const int FAST_ABS = 200;
 int currentSpeed = MID_ABS;
 const int FORWARD_TIME = 200;
+const int ROTATE_SMALL_TIME = 100;
 const int ROTATE_90_TIME = 240;
 const int ROTATE_180_TIME = ROTATE_90_TIME * 2;
 
@@ -129,9 +132,21 @@ void rotateLeft180() {
     stopMovement();
 }
 
+void rotateLeftSmall() {
+    rotateLeft();
+    delay(ROTATE_SMALL_TIME);
+    stopMovement();
+}
+
 void rotateRight90() {
     rotateRight();
     delay(ROTATE_90_TIME);
+    stopMovement();
+}
+
+void rotateRightSmall() {
+    rotateRight();
+    delay(ROTATE_SMALL_TIME);
     stopMovement();
 }
 
