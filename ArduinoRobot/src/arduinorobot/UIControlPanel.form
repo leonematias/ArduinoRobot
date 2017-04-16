@@ -241,9 +241,8 @@
         </Component>
         <Component class="javax.swing.JSlider" name="sliderSpeed">
           <Properties>
-            <Property name="maximum" type="int" value="3"/>
-            <Property name="minimum" type="int" value="1"/>
-            <Property name="value" type="int" value="2"/>
+            <Property name="maximum" type="int" value="255"/>
+            <Property name="value" type="int" value="100"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -275,20 +274,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnDistanceTest" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="textDistanceTest" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnServoLeft" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnServoCenter" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnServoRight" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="btnDistanceTest" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="textDistanceTest" min="-2" pref="126" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -299,13 +287,7 @@
                       <Component id="btnDistanceTest" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="textDistanceTest" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnServoLeft" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnServoCenter" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnServoRight" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="40" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -319,34 +301,10 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDistanceTestActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnServoLeft">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Left"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnServoLeftActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JTextField" name="textDistanceTest">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnServoCenter">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Center"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnServoCenterActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnServoRight">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Right"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnServoRightActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -1,5 +1,9 @@
 package arduinorobot;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * UI controls
  * 
@@ -21,13 +25,26 @@ public class UIControlPanel extends javax.swing.JPanel {
     }
     
     private CommandResponse sendCommand(Command command) {
+        return sendCommand(command, Collections.EMPTY_LIST);
+    }
+    
+    private CommandResponse sendCommand(Command command, int param) {
+        return sendCommand(command, Arrays.asList(new String[]{String.valueOf(param)}));
+    }
+    
+    private CommandResponse sendCommand(Command command, List<String> params) {
         if(server == null)
             return null;
         
-        mainUI.log("Sending command: " + command);
-        CommandResponse response = server.sendBlockingCommand(command);
+        mainUI.log("Sending command: " + command + ", " + params);
+        CommandResponse response = server.sendBlockingCommand(command, params);
         mainUI.log("Response: " + response);
         return response;
+    }
+    
+    private void setSpeed() {
+        int speed = sliderSpeed.getValue();
+        sendCommand(Command.SPD, speed);
     }
 
     /**
@@ -56,10 +73,7 @@ public class UIControlPanel extends javax.swing.JPanel {
         btnStop = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnDistanceTest = new javax.swing.JButton();
-        btnServoLeft = new javax.swing.JButton();
         textDistanceTest = new javax.swing.JTextField();
-        btnServoCenter = new javax.swing.JButton();
-        btnServoRight = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         checkLed = new javax.swing.JCheckBox();
         btnPing = new javax.swing.JButton();
@@ -152,9 +166,8 @@ public class UIControlPanel extends javax.swing.JPanel {
             }
         });
 
-        sliderSpeed.setMaximum(3);
-        sliderSpeed.setMinimum(1);
-        sliderSpeed.setValue(2);
+        sliderSpeed.setMaximum(255);
+        sliderSpeed.setValue(100);
 
         jLabel1.setText("Speed");
 
@@ -220,28 +233,7 @@ public class UIControlPanel extends javax.swing.JPanel {
             }
         });
 
-        btnServoLeft.setText("Left");
-        btnServoLeft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnServoLeftActionPerformed(evt);
-            }
-        });
-
         textDistanceTest.setEditable(false);
-
-        btnServoCenter.setText("Center");
-        btnServoCenter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnServoCenterActionPerformed(evt);
-            }
-        });
-
-        btnServoRight.setText("Right");
-        btnServoRight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnServoRightActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -249,17 +241,9 @@ public class UIControlPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnDistanceTest)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textDistanceTest))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnServoLeft)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnServoCenter)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnServoRight))))
+                .addComponent(btnDistanceTest)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textDistanceTest, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,12 +251,7 @@ public class UIControlPanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDistanceTest)
                     .addComponent(textDistanceTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnServoLeft)
-                    .addComponent(btnServoCenter)
-                    .addComponent(btnServoRight))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Misc"));
@@ -391,10 +370,6 @@ public class UIControlPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnServoLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServoLeftActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnServoLeftActionPerformed
-
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
         mainUI.log("Connecting...");
         server = new Server();
@@ -405,7 +380,8 @@ public class UIControlPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConnectActionPerformed
 
     private void btnForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForwardActionPerformed
-        sendCommand(Command.STEP_FORWARD);
+        setSpeed();
+        sendCommand(Command.FORW);
     }//GEN-LAST:event_btnForwardActionPerformed
 
     private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
@@ -413,37 +389,25 @@ public class UIControlPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnStopActionPerformed
 
     private void btnLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeftActionPerformed
-        sendCommand(Command.ROTATE_LEFT_90);
+        setSpeed();
+        sendCommand(Command.RLEFT);
     }//GEN-LAST:event_btnLeftActionPerformed
 
     private void btnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
-        sendCommand(Command.ROTATE_RIGHT_90);
+        setSpeed();
+        sendCommand(Command.RRIGHT);
     }//GEN-LAST:event_btnRightActionPerformed
 
     private void btnBackwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackwardActionPerformed
-        sendCommand(Command.STEP_BACKWARD);
+        setSpeed();
+        sendCommand(Command.BACK);
     }//GEN-LAST:event_btnBackwardActionPerformed
-
-    private void btnDistanceTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDistanceTestActionPerformed
-        CommandResponse response = sendCommand(Command.TEST_DISTANCE);
-        if(response != null) {
-            textDistanceTest.setText(String.valueOf(response.getIntResponse()));
-        }
-    }//GEN-LAST:event_btnDistanceTestActionPerformed
-
-    private void btnServoCenterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServoCenterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnServoCenterActionPerformed
-
-    private void btnServoRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServoRightActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnServoRightActionPerformed
 
     private void checkLedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkLedActionPerformed
         if(checkLed.isSelected()) {
-            sendCommand(Command.LED_ON);
+            sendCommand(Command.LED, 1);
         } else {
-            sendCommand(Command.LED_OFF);
+            sendCommand(Command.LED, 0);
         }
     }//GEN-LAST:event_checkLedActionPerformed
 
@@ -455,6 +419,13 @@ public class UIControlPanel extends javax.swing.JPanel {
         ai.execute();
     }//GEN-LAST:event_btnAIActiveActionPerformed
 
+    private void btnDistanceTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDistanceTestActionPerformed
+        CommandResponse response = sendCommand(Command.DIST);
+        if(response != null) {
+            textDistanceTest.setText(String.valueOf(response.getIntResponse(0)));
+        }
+    }//GEN-LAST:event_btnDistanceTestActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAIActive;
@@ -465,9 +436,6 @@ public class UIControlPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnLeft;
     private javax.swing.JButton btnPing;
     private javax.swing.JButton btnRight;
-    private javax.swing.JButton btnServoCenter;
-    private javax.swing.JButton btnServoLeft;
-    private javax.swing.JButton btnServoRight;
     private javax.swing.JButton btnStop;
     private javax.swing.JCheckBox checkLed;
     private javax.swing.JButton jButton5;

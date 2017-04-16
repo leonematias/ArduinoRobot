@@ -42,12 +42,15 @@ public class AI {
     
     
    private void aiLoop() {
-       int distance = Command.distance(server);
+       /*
+       int distance = Command.sendAndGetInt(server, Command.DIST);
+       
        if(distance > 20) {
            Command.forward(server, 1);
        } else {
            Command.leftSmall(server);
        }
+       */
        
    }
     

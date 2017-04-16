@@ -56,11 +56,27 @@ public class BluetoothDeviceManager {
     public void connect() {
         try {
             
+            /*
             //Search device
             this.device = null;
             this.countDownLatch = new CountDownLatch(1);
             this.agent.startInquiry(DiscoveryAgent.GIAC, new DiscoverDeviceListener());
             this.countDownLatch.await();
+            if(this.device == null) {
+                throw new RuntimeException("Could not find device with name: " + deviceName);
+            }
+            */
+            
+            //Search device from pre-known list
+            RemoteDevice[] devices = this.agent.retrieveDevices(DiscoveryAgent.PREKNOWN);
+            if(devices != null && devices.length > 0) {
+                for (RemoteDevice dev : devices) {
+                    if(this.deviceName.equals(dev.getFriendlyName(false))) {
+                        this.device = dev;
+                        break;
+                    }
+                }
+            }
             if(this.device == null) {
                 throw new RuntimeException("Could not find device with name: " + deviceName);
             }

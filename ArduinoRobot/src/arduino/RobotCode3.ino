@@ -4,13 +4,12 @@
  * Matias Leone
  */
 
-
 //Gyroscope library
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
-#define BNO055_SAMPLERATE_DELAY_MS (100)
+#define BNO055_SAMPLERATE_DELAY_MS 100
 Adafruit_BNO055 gyro = Adafruit_BNO055(55); 
 
 
@@ -35,13 +34,13 @@ int wheelsMotorSpeed = 0;
 int led = 0;
 
 //Command
-#define COMMAMD_SEP = '\n';
-#define PARAM_SEP = '|';
-#define MAX_COMMAND_PARAMS = 3;
+#define COMMAMD_SEP '\n'
+#define PARAM_SEP '|'
+#define MAX_COMMAND_PARAMS 3
 struct Command {
     String command;
     int paramsCount;
-    String params[COMMAND];
+    String params[MAX_COMMAND_PARAMS];
 };
 Command cmd;
 
@@ -69,19 +68,19 @@ void readInputCommand() {
             return;
 
         //Parse command
-        int sepIndex = str.indexOf(PARAM_SEP);
+        int sepIndex = inputString.indexOf(PARAM_SEP);
         if(sepIndex < 0)
             return;
-        cmd.command = str.substring(0, sepIndex);
+        cmd.command = inputString.substring(0, sepIndex);
 
         //Read params
         int n = sepIndex + 1;
         int paramIndex = 0;
         while(n < len && paramIndex < MAX_COMMAND_PARAMS) {
-            sepIndex = str.indexOf(PARAM_SEP, n);
+            sepIndex = inputString.indexOf(PARAM_SEP, n);
             if(sepIndex < 0)
                 break;
-            cmd.params[paramIndex++] = str.substring(n, sepIndex);
+            cmd.params[paramIndex++] = inputString.substring(n, sepIndex);
             n = sepIndex + 1;
         }
     }
@@ -100,7 +99,7 @@ void returnInt(int result) {
     Serial.println(response);
 }
 
-void return3Double(double res1, double res2, double res3) {
+void return3Float(float res1, float res2, float res3) {
     String response = cmd.command;
     response += '_';
     response += res1;
@@ -241,7 +240,7 @@ void loop() {
     } else if(cmd.command == "GYRO") {
         sensors_event_t event;
         gyro.getEvent(&event);
-        return3Double(event.orientation.x, orientation.y, orientation.z);
+        return3Float(event.orientation.x, event.orientation.y, event.orientation.z);
         //delay(BNO055_SAMPLERATE_DELAY_MS);
     }
 }
