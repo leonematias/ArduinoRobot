@@ -43,7 +43,7 @@ public class Server implements BluetoothDeviceManager.MsgListener {
     public CommandResponse sendBlockingCommand(Command command, List<String> params) {
         try {
             commandResponse.reset();
-            bluetooth.sendMessage(buildCommandString(command, params));
+            bluetooth.sendMessage(command.buildCommandString(params));
             responseSemaphore.acquire();
             if(commandResponse.getCommand() == null)
                 throw new RuntimeException("Empty response");
@@ -55,15 +55,6 @@ public class Server implements BluetoothDeviceManager.MsgListener {
         
     }
     
-    private String buildCommandString(Command command, List<String> params) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(command.name());
-        sb.append(";");
-        for (int i = 0; i < params.size(); i++) {
-            sb.append(params.get(i));
-            sb.append(";");
-        }
-        return sb.toString();
-    }
+    
     
 }

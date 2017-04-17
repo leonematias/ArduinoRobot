@@ -4,6 +4,11 @@
  * Matias Leone
  */
 
+//Debug macros (leave only one of the following lines)
+//#define DEBUG(...) Serial.println(__VA_ARGS__)
+#define DEBUG(...)
+
+
 //Gyroscope library
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -16,15 +21,15 @@ Adafruit_BNO055 gyro = Adafruit_BNO055(55);
 /**
  * Pins layout
  */
-const int PIN_WHEELS_IN1 = 9;
-const int PIN_WHEELS_IN2 = 8;
-const int PIN_WHEELS_IN3 = 7;
-const int PIN_WHEELS_IN4 = 6;
-const int PIN_WHEELS_ENA = 11;
-const int PIN_WHEELS_ENB = 5;
-const int PIN_LED = 13;
-const int PIN_DIST_ECHO = A3;
-const int PIN_DIST_TRIG = A2;
+#define PIN_WHEELS_IN1 9
+#define PIN_WHEELS_IN2 8
+#define PIN_WHEELS_IN3 7
+#define PIN_WHEELS_IN4 6
+#define PIN_WHEELS_ENA 11
+#define PIN_WHEELS_ENB 5
+#define PIN_LED 13
+#define PIN_DIST_ECHO A3
+#define PIN_DIST_TRIG A2
 //BNO055 using analog A4 and A5
 
 
@@ -36,6 +41,7 @@ int led = 0;
 //Command
 #define COMMAMD_SEP '\n'
 #define PARAM_SEP '|'
+#define COMMAND_OK_RESPONSE "OK"
 #define MAX_COMMAND_PARAMS 3
 struct Command {
     String command;
@@ -53,16 +59,13 @@ Command cmd;
 void readInputCommand() {
     //Init empty command
     cmd.command = "";
-    cmd.paramsCount = 0;
-    for(int i = 0; i < MAX_COMMAND_PARAMS; i++) {
-        cmd.params[i] = "";
-    }
     
     //Read incoming Serial commands
     if (Serial.available() > 0) {
 
         //Read input string
         String inputString = Serial.readStringUntil(COMMAMD_SEP);
+        DEBUG(cmd.command);
         int len = inputString.length();
         if(len == 0)
             return;
@@ -73,6 +76,12 @@ void readInputCommand() {
             return;
         cmd.command = inputString.substring(0, sepIndex);
 
+        //Clear params
+        cmd.paramsCount = 0;
+        for(int i = 0; i < MAX_COMMAND_PARAMS; i++) {
+            cmd.params[i] = "";
+        }
+        
         //Read params
         int n = sepIndex + 1;
         int paramIndex = 0;
@@ -83,29 +92,32 @@ void readInputCommand() {
             cmd.params[paramIndex++] = inputString.substring(n, sepIndex);
             n = sepIndex + 1;
         }
+        cmd.paramsCount = paramIndex;
+        DEBUG("Command: " + cmd.command + " params count: " + cmd.paramsCount);
     }
 }
 
 void returnOk() {
     String response = cmd.command;
-    response += "_OK";
+    response += PARAM_SEP;
+    response += COMMAND_OK_RESPONSE;
     Serial.println(response);
 }
 
 void returnInt(int result) {
     String response = cmd.command;
-    response += '_';
+    response += PARAM_SEP;
     response += result;
     Serial.println(response);
 }
 
 void return3Float(float res1, float res2, float res3) {
     String response = cmd.command;
-    response += '_';
+    response += PARAM_SEP;
     response += res1;
-    response += '_';
+    response += PARAM_SEP;
     response += res2;
-    response += '_';
+    response += PARAM_SEP;
     response += res3;
     Serial.println(response);
 }
@@ -156,8 +168,7 @@ void setup() {
 
     //Initialise gyroscope
     if(!gyro.begin()) {
-      Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-      while(1);
+      DEBUG("Error initializing GYROSCOPE");
     }
     delay(1000);
     gyro.setExtCrystalUse(true);

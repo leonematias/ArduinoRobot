@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  */
 public class CommandResponse {
     
-    private static Pattern SEP_PATTERN = Pattern.compile("_");
+    private static Pattern SEP_PATTERN = Pattern.compile("\\" + Command.PARAM_SEP);
     
     private Command command;
     private String[] responseParams;
@@ -25,7 +25,7 @@ public class CommandResponse {
         this.command = Command.valueOf(split[0]);
         this.responseParams = new String[split.length - 1];
         for (int i = 1; i < split.length; i++) {
-            this.responseParams[i] = split[i];
+            this.responseParams[i - 1] = split[i];
         }
     }
 
